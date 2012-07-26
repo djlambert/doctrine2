@@ -1303,6 +1303,11 @@ class BasicEntityPersister
                 continue;
             }
 
+            if (isset($this->_class->mappedAssociations[$name])) {
+                $columns[] = $columnName = $this->quoteStrategy->getMappedAssociationColumnName($name, $this->_class, $this->_platform);
+                $this->_columnTypes[$columnName] = $this->_class->mappedAssociations[$name]['fieldMapping']['type'];
+            }
+
             if (isset($this->_class->associationMappings[$name])) {
                 $assoc = $this->_class->associationMappings[$name];
                 if ($assoc['isOwningSide'] && $assoc['type'] & ClassMetadata::TO_ONE) {
