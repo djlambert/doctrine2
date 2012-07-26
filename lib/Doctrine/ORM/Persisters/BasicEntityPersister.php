@@ -1310,7 +1310,7 @@ class BasicEntityPersister
             }
 
             if (isset($this->_class->mappedAssociations[$name])) {
-                $columns[] = $columnName = $this->quoteStrategy->getMappedAssociationColumnName($name, $this->_class, $this->_platform);
+                $columns[] = $columnName = $this->quoteStrategy->getMappedAssociationColumnName($this->_class->mappedAssociations[$name], $this->_class, $this->_platform);
                 $this->_columnTypes[$columnName] = $this->_class->mappedAssociations[$name]['fieldMapping']['type'];
             }
 
