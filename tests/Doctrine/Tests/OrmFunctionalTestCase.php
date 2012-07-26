@@ -124,6 +124,12 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             'Doctrine\Tests\Models\CustomType\CustomTypeParent',
             'Doctrine\Tests\Models\CustomType\CustomTypeUpperCase',
         ),
+        'mappedassociation' => array(
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\FileFolder',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\AbstractContent',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Paper',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Photo',
+        ),
     );
 
     protected function useModelSet($setName)
