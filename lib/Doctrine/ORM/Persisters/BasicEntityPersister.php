@@ -615,7 +615,7 @@ class BasicEntityPersister
 
                     $this->_columnTypes[$sourceColumn] = $targetClass->getTypeOfColumn($targetColumn);
                 }
-            } else {
+            } elseif (!isset($this->_class->mappedAssociations[$field])) {
                 $columnName = $this->_class->columnNames[$field];
                 $this->_columnTypes[$columnName] = $this->_class->fieldMappings[$field]['type'];
                 $result[$this->getOwningTable($field)][$columnName] = $newVal;
