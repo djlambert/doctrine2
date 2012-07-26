@@ -245,6 +245,12 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             $conn->executeUpdate('DELETE FROM customtype_uppercases');
         }
 
+        if (isset($this->_usedModelSets['customtype'])) {
+            $conn->executeUpdate('DELETE FROM Paper');
+            $conn->executeUpdate('DELETE FROM Photo');
+            $conn->executeUpdate('DELETE FROM FileFolder');
+        }
+
         $this->_em->clear();
     }
 
