@@ -381,6 +381,13 @@ class ClassMetadataInfo implements ClassMetadata
     public $mappedAssociations = array();
 
     /**
+     * READ-ONLY: An array of column names. Used to lookup mapped association names.
+     *
+     * @var array
+     */
+    public $mappedAssociationMappings = array();
+
+    /**
      * READ-ONLY: The discriminator value of this class.
      *
      * <b>This does only apply to the JOINED and SINGLE_TABLE inheritance mapping strategies
@@ -2128,6 +2135,7 @@ class ClassMetadataInfo implements ClassMetadata
         }
 
         $mapping['fieldMapping'] = $fieldMapping;
+        $this->mappedAssociationMappings[$fieldMapping['columnName']] = $mapping['name'];
         $this->mappedAssociations[$mapping['name']] = $mapping;
     }
 
