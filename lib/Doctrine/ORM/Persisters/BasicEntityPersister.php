@@ -1123,6 +1123,10 @@ class BasicEntityPersister
         $eagerAliasCounter = 0;
 
         foreach ($this->_class->associationMappings as $assocField => $assoc) {
+            if (isset($skipMapped[$assocField])) {
+                continue;
+            }
+
             $assocColumnSQL = $this->_getSelectColumnAssociationSQL($assocField, $assoc, $this->_class);
 
             if ($assocColumnSQL) {
