@@ -400,6 +400,17 @@ class AnnotationDriver extends AbstractAnnotationDriver
 
                 $metadata->mapManyToMany($mapping);
             }
+
+            $mappedAssociation = array();
+            if ($mappedAssocAnnot = $this->reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\MappedAssociation')) {
+                $mappedAssociation['name'] = $property->getName();
+                $mappedAssociation['fieldMapping'] = array (
+                    'columnName' => $mappedAssocAnnot->discriminatorColumn,
+                    'length'     => $mappedAssocAnnot->length,
+                    'nullable'    => $mappedAssocAnnot->nullable,
+                );
+                $metadata->addMappedAssociation($mappedAssociation);
+            }
         }
 
         // Evaluate AssociationOverrides annotation
