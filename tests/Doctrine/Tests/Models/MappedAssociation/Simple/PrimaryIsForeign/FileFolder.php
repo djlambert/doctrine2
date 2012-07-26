@@ -58,11 +58,6 @@ class FileFolder
         return $this->title;
     }
 
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-
     public function setContent(AbstractContent $content)
     {
         $content->setFileFolder($this);
