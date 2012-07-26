@@ -2091,6 +2091,39 @@ class ClassMetadataInfo implements ClassMetadata
     }
 
     /**
+     * Add a mapped association to the class
+     *
+     * @param array $mapping
+     * @throws MappingException
+     * @return void
+     */
+    public function addMappedAssociation(array $mapping)
+    {
+        $fieldMapping = $mapping['fieldMapping'];
+
+        if (!isset($fieldMapping['columnName'])) {
+            $fieldMapping['fieldName'] = $mapping['name'] . 'Class';
+            $fieldMapping['columnName'] = $this->namingStrategy->propertyToColumnName($fieldMapping['fieldName']);
+        } else {
+            $fieldMapping['fieldName'] = $fieldMapping['columnName'];
+        }
+
+        if ($fieldMapping['columnName'][0] === '`') {
+            $fieldMapping['columnName']  = trim($fieldMapping['columnName'], '`');
+            $fieldMapping['quoted']      = true;
+        }
+
+        $fieldMapping['type'] = 'string';
+
+        if (isset($this->fieldNames[$fieldMapping['columnName']])) {
+            throw MappingException::duplicateColumnName($this->name, $fieldMapping['columnName']);
+        }
+
+        $mapping['fieldMapping'] = $fieldMapping;
+        $this->mappedAssociations[$mapping['name']] = $mapping;
+    }
+
+    /**
      * INTERNAL:
      * Adds a named query to this class.
      *
