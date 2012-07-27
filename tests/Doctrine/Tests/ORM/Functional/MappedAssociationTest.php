@@ -76,4 +76,50 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $queryFileFolder2 = $repository->find($id2);
         $this->assertEquals($fileFolder2, $queryFileFolder2);
     }
+
+    public function testSimplePrimaryIsForeignDetachedMappedAssociation()
+    {
+        // Create file folder 1
+        $fileFolder1 = new FileFolderDetached();
+        $fileFolder1->setTitle('Folder 1');
+        $this->_em->persist($fileFolder1);
+        $this->_em->flush();
+        $id1 = $fileFolder1->getId();
+
+        $content1 = new PaperDetached;
+        $content1->setDescription('Expense report');
+        $fileFolder1->setContent($content1);
+        $this->_em->flush();
+
+        // Create file folder 2
+        $fileFolder2 = new FileFolderDetached();
+        $fileFolder2->setTitle('Folder 2');
+        $this->_em->persist($fileFolder2);
+        $this->_em->flush();
+        $id2 = $fileFolder2->getId();
+
+        $content2 = new PhotoDetached;
+        $content2->setDescription('Family photo');
+        $fileFolder2->setContent($content2);
+        $this->_em->flush();
+
+        $this->_em->clear();
+
+        $repository = $this->_em->getRepository($this::FILEFOLDERDETACHED);
+        $query = $repository->createNativeNamedQuery('get-class-by-id');
+
+        $results = $query->setParameter(1, $id1)
+            ->getResult();
+        $this->assertEquals($results[0]['contentClass'], get_class($content1));
+
+        $results = $query->setParameter(1, $id2)
+            ->getResult();
+        $this->assertEquals($results[0]['contentClass'], get_class($content2));
+
+        $queryFileFolder1 = $repository->find($id1);
+        $this->assertEquals($fileFolder1, $queryFileFolder1);
+
+        $queryFileFolder2 = $repository->find($id2);
+        $this->assertEquals($fileFolder2, $queryFileFolder2);
+    }
 }
