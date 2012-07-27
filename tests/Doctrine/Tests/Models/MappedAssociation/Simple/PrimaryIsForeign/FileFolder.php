@@ -3,11 +3,12 @@ namespace Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign;
 
 /**
  * @Entity
+ * @Table(name="pif_filefolder")
  * @NamedNativeQueries({
  *      @NamedNativeQuery(
  *          name                = "get-class-by-id",
  *          resultSetMapping    = "get-class",
- *          query               = "SELECT contentClass from FileFolder WHERE id = ?"
+ *          query               = "SELECT contentClass from pif_filefolder WHERE id = ?"
  *      )
  * })
  *
