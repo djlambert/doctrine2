@@ -18,6 +18,13 @@ require_once __DIR__ . '/../../TestInit.php';
  */
 class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
 {
+    const FILEFOLDER         = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\FileFolder';
+    const PAPER              = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Paper';
+    const PHOTO              = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Photo';
+    const FILEFOLDERDETACHED = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\FileFolder';
+    const PAPERDETACHED      = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Paper';
+    const PHOTODETACHED      = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Photo';
+
     protected function setUp()
     {
         $this->useModelSet('mappedassociation');
