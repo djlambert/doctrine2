@@ -779,6 +779,34 @@ class UnitOfWork implements PropertyChangedListener
         }
     }
 
+    /**
+     * Computes the changes of a mapped association.
+     *
+     * @param mixed $value The value of the association.
+     */
+    private function computeMappedAssociationChanges($value)
+    {
+        $targetClass = $this->em->getClassMetadata(get_class($value));
+
+        $state = $this->getEntityState($value, self::STATE_NEW);
+
+        switch ($state) {
+            case self::STATE_NEW:
+                $this->persistNew($targetClass, $value);
+                $this->computeChangeSet($targetClass, $value);
+                break;
+
+            case self::STATE_REMOVED:
+                // TODO do something?
+
+            case self::STATE_DETACHED:
+                // TODO do something?
+
+            default:
+            	$this->computeChangeSet($targetClass, $value);
+        }
+    }
+
     private function persistNew($class, $entity)
     {
         $oid = spl_object_hash($entity);
