@@ -59,7 +59,7 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
 
         $this->_em->clear();
 
-        $repository = $this->_em->getRepository('Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\FileFolder');
+        $repository = $this->_em->getRepository($this::FILEFOLDER);
         $query = $repository->createNativeNamedQuery('get-class-by-id');
 
         $results = $query->setParameter(1, $id1)
