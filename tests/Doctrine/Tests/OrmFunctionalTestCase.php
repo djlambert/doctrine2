@@ -129,6 +129,10 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\AbstractContent',
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Paper',
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Photo',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\FileFolder',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\AbstractContent',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Paper',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Photo',
         ),
     );
 
