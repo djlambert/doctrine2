@@ -2578,6 +2578,25 @@ class UnitOfWork implements PropertyChangedListener
             }
         }
 
+        foreach ($class->mappedAssociations as $mappedAssoc => $assoc) {
+            if (isset($class->associationMappings[$mappedAssoc])) {
+                continue;
+            }
+            $targetEntity = $data[$class->mappedAssociations[$mappedAssoc]['fieldMapping']['columnName']];
+            $targetClass = $this->em->getClassMetadata($targetEntity);
+            $targetAssoc = $targetClass->getAssociationsByTargetClass($className);
+
+            $criteria = array();
+            // Won't work for composite keys here, better way than foreach?
+            foreach ($targetAssoc as $targetField => $fieldAssoc) {
+                foreach ($fieldAssoc['targetToSourceKeyColumns'] as $source => $target) {
+                    $criteria[$targetField] = $data[$source];
+                }
+            }
+
+            $class->reflFields[$mappedAssoc]->setValue($entity, $this->getEntityPersister($targetEntity)->load($criteria));
+        }
+
         if ($overrideLocalValues) {
             if (isset($class->lifecycleCallbacks[Events::postLoad])) {
                 $class->invokeLifecycleCallbacks(Events::postLoad, $entity);
