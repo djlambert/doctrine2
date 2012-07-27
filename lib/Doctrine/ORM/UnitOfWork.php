@@ -637,6 +637,17 @@ class UnitOfWork implements PropertyChangedListener
             }
         }
 
+        // Look for changes in unassociated mapped associations
+        foreach ($class->mappedAssociations as $mappedAssoc => $assoc) {
+            // If an association will get caught below
+            if (isset($class->associationMappings[$mappedAssoc])) {
+                continue;
+            }
+            if (($val = $class->reflFields[$mappedAssoc]->getValue($entity)) !== null) {
+                $this->computeMappedAssociationChanges($val);
+            }
+        }
+
         // Look for changes in associations of the entity
         foreach ($class->associationMappings as $field => $assoc) {
             if (($val = $class->reflFields[$field]->getValue($entity)) !== null) {
