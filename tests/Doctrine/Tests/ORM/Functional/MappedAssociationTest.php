@@ -7,6 +7,9 @@ use Doctrine\ORM\Query;
 use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\FileFolder;
 use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Paper;
 use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Photo;
+use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\FileFolder as FileFolderDetached;
+use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Paper as PaperDetached;
+use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Photo as PhotoDetached;
 
 require_once __DIR__ . '/../../TestInit.php';
 
