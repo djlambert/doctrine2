@@ -9,7 +9,6 @@ class AbstractContent
     /**
      * @Id
      * @OneToOne(targetEntity="FileFolder", inversedBy="content")
-     * @JoinColumn(name="id")
      */
     private $fileFolder;
 
