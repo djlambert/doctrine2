@@ -31,7 +31,7 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
         parent::setUp();
     }
 
-    public function testSimplePrimaryIsForeignMappedAssociationSave()
+    public function testSimplePrimaryIsForeignMappedAssociation()
     {
         // Create file folder 1
         $fileFolder1 = new FileFolder();
