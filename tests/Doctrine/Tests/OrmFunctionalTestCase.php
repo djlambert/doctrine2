@@ -250,9 +250,12 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
         }
 
         if (isset($this->_usedModelSets['customtype'])) {
-            $conn->executeUpdate('DELETE FROM Paper');
-            $conn->executeUpdate('DELETE FROM Photo');
-            $conn->executeUpdate('DELETE FROM FileFolder');
+            $conn->executeUpdate('DELETE FROM pif_paper');
+            $conn->executeUpdate('DELETE FROM pif_photo');
+            $conn->executeUpdate('DELETE FROM pif_filefolder');
+            $conn->executeUpdate('DELETE FROM pifd_paper');
+            $conn->executeUpdate('DELETE FROM pifd_photo');
+            $conn->executeUpdate('DELETE FROM pifd_filefolder');
         }
 
         $this->_em->clear();
