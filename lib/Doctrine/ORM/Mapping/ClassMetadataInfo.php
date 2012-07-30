@@ -2135,6 +2135,31 @@ class ClassMetadataInfo implements ClassMetadata
         }
 
         $mapping['fieldMapping'] = $fieldMapping;
+
+        if (isset($mapping['join'])) {
+            $join = $mapping['join'];
+            unset($mapping['join']);
+            $join['type'] = self::ONE_TO_ONE;
+            $join = $this->_validateAndCompleteOneToOneMapping($join);
+
+            $uniqueContraintColumns = array($fieldMapping['columnName']);
+
+            if (isset($join['joinColumns'])) {
+                foreach ($join['joinColumns'] as &$joinColumn) {
+                    if (isset($joinColumn['unique'])) {
+                        unset($joinColumn['unique']);
+                    }
+                    $uniqueContraintColumns[] = $joinColumn['name'];
+                }
+
+                $this->table['uniqueConstraints'][$fieldMapping['fieldName']."_uniq"] = array(
+                    'columns' => $uniqueContraintColumns
+                );
+            }
+
+        $this->_storeAssociationMapping($join);
+        }
+
         $this->mappedAssociationMappings[$fieldMapping['columnName']] = $mapping['name'];
         $this->mappedAssociations[$mapping['name']] = $mapping;
     }
