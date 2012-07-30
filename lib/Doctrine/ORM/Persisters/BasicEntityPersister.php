@@ -1124,7 +1124,7 @@ class BasicEntityPersister
         foreach ($this->_class->associationMappings as $assocField => $assoc) {
             $targetEntity = $this->_em->getClassMetadata($assoc['targetEntity']);
 
-            if (isset($skipMapped[$assocField])) {
+            if (isset($skipMapped[$assocField]) || isset($targetEntity->mappedAssociations[$assoc['mappedBy']])) {
                 continue;
             }
 
