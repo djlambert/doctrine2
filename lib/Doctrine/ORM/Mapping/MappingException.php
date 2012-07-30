@@ -438,4 +438,8 @@ class MappingException extends \Doctrine\ORM\ORMException
             $cascades
         ));
     }
+
+    public static function associationNotOnMappedAssociation($className, $field) {
+        return new self("Association not allowed outside mapped association on '$className#$field' ");
+    }
 }
