@@ -128,4 +128,48 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $queryFileFolder2 = $repository->find($id2);
         $this->assertEquals($fileFolder2, $queryFileFolder2);
     }
+
+    public function testSimpleDiscretePrimaryMappedAssociation()
+    {
+        // Create shelf 1
+        $shelf1 = new Shelf();
+        $shelf1->setBookcase('Bedroom');
+
+        $object1 = new Book;
+        $object1->setDescription('To Kill a Mockingbird');
+        $shelf1->setObject($object1);
+        $this->_em->persist($shelf1);
+        $this->_em->flush();
+        $id1 = $shelf1->getId();
+
+        // Create shelf 2
+        $shelf2 = new Shelf();
+        $shelf2->setBookcase('Theater');
+
+        $object2 = new Video;
+        $object2->setDescription('Die Hard');
+        $shelf2->setObject($object2);
+        $this->_em->persist($shelf2);
+        $this->_em->flush();
+        $id2 = $shelf2->getId();
+
+        $this->_em->clear();
+
+        $repository = $this->_em->getRepository($this::SHELF);
+        $query = $repository->createNativeNamedQuery('get-class-by-id');
+
+        $query = $query->setParameter(1, $id1);
+        $results = $query->getResult();
+        $this->assertEquals($results[0]['objectClass'], get_class($object1));
+
+        $results = $query->setParameter(1, $id2)
+            ->getResult();
+        $this->assertEquals($results[0]['objectClass'], get_class($object2));
+
+        $queryFileFolder1 = $repository->find($id1);
+        $this->assertEquals($shelf1, $queryFileFolder1);
+
+        $queryFileFolder2 = $repository->find($id2);
+        $this->assertEquals($shelf2, $queryFileFolder2);
+    }
 }
