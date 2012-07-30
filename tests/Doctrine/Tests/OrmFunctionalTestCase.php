@@ -134,6 +134,7 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Paper',
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Photo',
             'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Shelf',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\AbstractObject',
             'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Book',
             'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Video',
         ),
