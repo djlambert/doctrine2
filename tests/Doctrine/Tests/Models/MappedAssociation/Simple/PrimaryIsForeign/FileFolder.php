@@ -39,8 +39,7 @@ class FileFolder
     private $title;
 
     /**
-     * @OneToOne(targetEntity="AbstractContent", mappedBy="fileFolder", cascade={"all"}, orphanRemoval=true)
-     * @MappedAssociation
+     * @MappedAssociation(join=@OneToOne(targetEntity="AbstractContent", mappedBy="fileFolder", cascade={"all"}, orphanRemoval=true))
      */
     private $content;
 
