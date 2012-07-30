@@ -407,7 +407,7 @@ class AnnotationDriver extends AbstractAnnotationDriver
                 $mappedAssociation['fieldMapping'] = array (
                     'columnName' => $mappedAssocAnnot->discriminatorColumn,
                     'length'     => $mappedAssocAnnot->length,
-                    'nullable'    => $mappedAssocAnnot->nullable,
+                    'nullable'   => $mappedAssocAnnot->nullable,
                 );
                 $metadata->addMappedAssociation($mappedAssociation);
             }
