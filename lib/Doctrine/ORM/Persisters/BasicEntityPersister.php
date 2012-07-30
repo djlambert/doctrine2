@@ -1111,8 +1111,7 @@ class BasicEntityPersister
             $columnList .= $this->_getSelectMappedAssociationColumnSQL($assoc, $this->_class);
 
             if (isset($this->_class->associationMappings[$mappedAssoc])) {
-                $targetEntity = $this->_class->associationMappings[$mappedAssoc]['targetEntity'];
-                $targetMetadata = $this->_em->getClassMetadata($targetEntity);
+                $targetMetadata = $this->_em->getClassMetadata($this->_class->associationMappings[$mappedAssoc]['targetEntity']);
                 if ($targetMetadata->isMappedSuperclass) {
                     $skipMapped[$mappedAssoc] = true;
                 }
