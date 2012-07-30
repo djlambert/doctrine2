@@ -33,4 +33,7 @@ final class MappedAssociation implements Annotation
 
     /** @var boolean */
     public $nullable = true;
+
+    /** @var \Doctrine\ORM\Mapping\OneToOne */
+    public $join;
 }
