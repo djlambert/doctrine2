@@ -10,6 +10,9 @@ use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeign\Photo;
 use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\FileFolder as FileFolderDetached;
 use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Paper as PaperDetached;
 use Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Photo as PhotoDetached;
+use Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Shelf;
+use Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Book;
+use Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Video;
 
 require_once __DIR__ . '/../../TestInit.php';
 
@@ -24,6 +27,9 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
     const FILEFOLDERDETACHED = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\FileFolder';
     const PAPERDETACHED      = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Paper';
     const PHOTODETACHED      = 'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Photo';
+    const SHELF              = 'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Shelf';
+    const BOOK               = 'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Book';
+    const VIDEO              = 'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Video';
 
     protected function setUp()
     {
