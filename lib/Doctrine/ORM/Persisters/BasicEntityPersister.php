@@ -1123,6 +1123,8 @@ class BasicEntityPersister
         $eagerAliasCounter = 0;
 
         foreach ($this->_class->associationMappings as $assocField => $assoc) {
+            $eagerEntity = $this->_em->getClassMetadata($assoc['targetEntity']);
+
             if (isset($skipMapped[$assocField])) {
                 continue;
             }
@@ -1136,7 +1138,6 @@ class BasicEntityPersister
             }
 
             if ($assoc['type'] & ClassMetadata::TO_ONE && ($assoc['fetch'] == ClassMetadata::FETCH_EAGER || !$assoc['isOwningSide'])) {
-                $eagerEntity = $this->_em->getClassMetadata($assoc['targetEntity']);
 
                 if ($eagerEntity->inheritanceType != ClassMetadata::INHERITANCE_TYPE_NONE) {
                     continue; // now this is why you shouldn't use inheritance
