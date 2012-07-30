@@ -1112,7 +1112,7 @@ class BasicEntityPersister
 
             if (isset($this->_class->associationMappings[$mappedAssoc])) {
                 $targetMetadata = $this->_em->getClassMetadata($this->_class->associationMappings[$mappedAssoc]['targetEntity']);
-                if ($targetMetadata->isMappedSuperclass) {
+                if ($targetMetadata->isMappedSuperclass && !$this->_class->associationMappings[$mappedAssoc]['isOwningSide']) {
                     $skipMapped[$mappedAssoc] = true;
                 }
             }
