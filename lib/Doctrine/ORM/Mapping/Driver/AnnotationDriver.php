@@ -409,6 +409,26 @@ class AnnotationDriver extends AbstractAnnotationDriver
                     'length'     => $mappedAssocAnnot->length,
                     'nullable'   => $mappedAssocAnnot->nullable,
                 );
+                $associations = array('Doctrine\ORM\Mapping\OneToOne', 'Doctrine\ORM\Mapping\OneToMany', 'Doctrine\ORM\Mapping\ManyToOne', 'Doctrine\ORM\Mapping\ManyToMany');
+                $annotations = $this->reader->getPropertyAnnotations($property);
+                foreach ($annotations as $annot) {
+                    if (in_array(get_class($annot), $associations)) {
+                        throw MappingException::associationNotOnMappedAssociation($className, $property->getName());
+                    }
+                }
+
+                if ($mappedAssocAnnot->join) {
+                    $mappedAssociation['join'] = array (
+                        'fieldName'     => $property->getName(),
+                        'targetEntity'  => $mappedAssocAnnot->join->targetEntity,
+                        'mappedBy'      => $mappedAssocAnnot->join->mappedBy,
+                        'inversedBy'    => $mappedAssocAnnot->join->inversedBy,
+                        'cascade'       => $mappedAssocAnnot->join->cascade,
+                        'orphanRemoval' => $mappedAssocAnnot->join->orphanRemoval,
+                        'fetch'         => $this->getFetchMode($className, $mappedAssocAnnot->join->fetch),
+
+                    );
+                }
                 $metadata->addMappedAssociation($mappedAssociation);
             }
         }
