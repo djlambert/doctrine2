@@ -133,6 +133,9 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\AbstractContent',
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Paper',
             'Doctrine\Tests\Models\MappedAssociation\Simple\PrimaryIsForeignDetached\Photo',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Shelf',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Book',
+            'Doctrine\Tests\Models\MappedAssociation\Simple\DiscretePrimary\Video',
         ),
     );
 
@@ -256,6 +259,9 @@ abstract class OrmFunctionalTestCase extends OrmTestCase
             $conn->executeUpdate('DELETE FROM pifd_paper');
             $conn->executeUpdate('DELETE FROM pifd_photo');
             $conn->executeUpdate('DELETE FROM pifd_filefolder');
+            $conn->executeUpdate('DELETE FROM dp_shelf');
+            $conn->executeUpdate('DELETE FROM dp_book');
+            $conn->executeUpdate('DELETE FROM dp_video');
         }
 
         $this->_em->clear();
