@@ -259,5 +259,29 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
 
         $queryShelf2 = $repository->find($id2);
         $this->assertEquals($shelf2, $queryShelf2);
+
+        $this->_em->remove($queryShelf0);
+        $this->_em->remove($queryShelf1);
+        $this->_em->remove($queryShelf2);
+        $this->_em->flush();
+        $this->_em->clear();
+
+        $queryShelf0 = $repository->find($id0);
+        $this->assertEquals(null, $queryShelf0);
+
+        $queryShelf1 = $repository->find($id1);
+        $this->assertEquals(null, $queryShelf1);
+
+        $queryShelf2 = $repository->find($id2);
+        $this->assertEquals(null, $queryShelf2);
+
+        $repository = $this->_em->getRepository($this::BOOK);
+        $results = $repository->findAll();
+        $this->assertEmpty($results);
+
+        $repository = $this->_em->getRepository($this::VIDEO);
+        $results = $repository->findAll();
+        $this->assertEmpty($results);
+        null;
     }
 }
