@@ -81,6 +81,25 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
 
         $queryFileFolder2 = $repository->find($id2);
         $this->assertEquals($fileFolder2, $queryFileFolder2);
+
+        $this->_em->remove($queryFileFolder1);
+        $this->_em->remove($queryFileFolder2);
+        $this->_em->flush();
+        $this->_em->clear();
+
+        $queryFileFolder1 = $repository->find($id1);
+        $this->assertEquals(null, $queryFileFolder1);
+
+        $queryFileFolder2 = $repository->find($id2);
+        $this->assertEquals(null, $queryFileFolder2);
+
+        $repository = $this->_em->getRepository($this::PAPER);
+        $results = $repository->findAll();
+        $this->assertEmpty($results);
+
+        $repository = $this->_em->getRepository($this::PHOTO);
+        $results = $repository->findAll();
+        $this->assertEmpty($results);
     }
 
     public function testSimplePrimaryIsForeignDetachedMappedAssociation()
