@@ -203,10 +203,10 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
             ->getResult();
         $this->assertEquals($results[0]['objectClass'], get_class($object2));
 
-        $queryFileFolder1 = $repository->find($id1);
-        $this->assertEquals($shelf1, $queryFileFolder1);
+        $queryShelf1 = $repository->find($id1);
+        $this->assertEquals($shelf1, $queryShelf1);
 
-        $queryFileFolder2 = $repository->find($id2);
-        $this->assertEquals($shelf2, $queryFileFolder2);
+        $queryShelf2 = $repository->find($id2);
+        $this->assertEquals($shelf2, $queryShelf2);
     }
 }
