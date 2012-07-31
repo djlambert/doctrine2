@@ -122,6 +122,13 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
 
     public function testSimplePrimaryIsForeignDetachedMappedAssociation()
     {
+        // Create file folder 0
+        $fileFolder0 = new FileFolderDetached();
+        $fileFolder0->setTitle('Folder 0');
+        $this->_em->persist($fileFolder0);
+        $this->_em->flush();
+        $id0 = $fileFolder0->getId();
+
         // Create file folder 1
         $fileFolder1 = new FileFolderDetached();
         $fileFolder1->setTitle('Folder 1');
@@ -151,6 +158,10 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $repository = $this->_em->getRepository($this::FILEFOLDERDETACHED);
         $query = $repository->createNativeNamedQuery('get-class-by-id');
 
+        $results = $query->setParameter(1, $id0)
+            ->getResult();
+        $this->assertEquals($results[0]['contentClass'], null);
+
         $results = $query->setParameter(1, $id1)
             ->getResult();
         $this->assertEquals($results[0]['contentClass'], get_class($content1));
@@ -159,11 +170,37 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
             ->getResult();
         $this->assertEquals($results[0]['contentClass'], get_class($content2));
 
+        $queryFileFolder0 = $repository->find($id0);
+        $this->assertEquals($fileFolder0, $queryFileFolder0);
+
         $queryFileFolder1 = $repository->find($id1);
         $this->assertEquals($fileFolder1, $queryFileFolder1);
 
         $queryFileFolder2 = $repository->find($id2);
         $this->assertEquals($fileFolder2, $queryFileFolder2);
+
+        $this->_em->remove($queryFileFolder0);
+        $this->_em->remove($queryFileFolder1);
+        $this->_em->remove($queryFileFolder2);
+        $this->_em->flush();
+        $this->_em->clear();
+
+        $queryFileFolder0 = $repository->find($id0);
+        $this->assertEquals(null, $queryFileFolder0);
+
+        $queryFileFolder1 = $repository->find($id1);
+        $this->assertEquals(null, $queryFileFolder1);
+
+        $queryFileFolder2 = $repository->find($id2);
+        $this->assertEquals(null, $queryFileFolder2);
+
+        $repository = $this->_em->getRepository($this::PAPER);
+        $results = $repository->findAll();
+        $this->assertEmpty($results);
+
+        $repository = $this->_em->getRepository($this::PHOTO);
+        $results = $repository->findAll();
+        $this->assertEmpty($results);
     }
 
     public function testSimpleDiscretePrimaryMappedAssociation()
