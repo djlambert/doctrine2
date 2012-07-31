@@ -507,6 +507,32 @@ class BasicEntityPersister
     }
 
     /**
+     * @param $entity
+     * @return void
+     */
+    protected function deleteMappedAssociationRecord($entity)
+    {
+        foreach ($this->_class->mappedAssociations as $mappedAssoc => $assoc) {
+            if (($targetEntity = $this->_class->getFieldValue($entity, $mappedAssoc)) != null && !isset($this->_class->associationMappings[$mappedAssoc])) {
+                $targetClass = $this->_em->getClassMetadata(get_class($targetEntity));
+                $targetAssoc = $targetClass->getAssociationsByTargetClass($this->_class->name);
+
+                $identifier = array();
+                foreach ($targetAssoc as $mapping) {
+                    if (!$mapping['isOwningSide']) {
+                        // TODO this probably can't even happen since the association would have to be defined on the parent
+                    } else {
+                        foreach ($mapping['joinColumns'] as $joinColumn) {
+                            $identifier[$this->quoteStrategy->getJoinColumnName($joinColumn, $targetClass, $this->_platform)] = $this->_class->getFieldValue($entity, $joinColumn['referencedColumnName']);
+                        }
+                    }
+                }
+                $this->_conn->delete($this->quoteStrategy->getTableName($targetClass, $this->_platform), $identifier);
+            }
+        }
+    }
+
+    /**
      * Deletes a managed entity.
      *
      * The entity to delete must be managed and have a persistent identifier.
