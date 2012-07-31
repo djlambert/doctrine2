@@ -546,6 +546,8 @@ class BasicEntityPersister
     {
         $identifier = $this->_em->getUnitOfWork()->getEntityIdentifier($entity);
 
+        $this->deleteMappedAssociationRecord($entity);
+
         $this->deleteJoinTableRecords($identifier);
 
         $id = array_combine($this->quoteStrategy->getIdentifierColumnNames($this->_class, $this->_platform), $identifier);
