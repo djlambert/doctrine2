@@ -205,6 +205,13 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
 
     public function testSimpleDiscretePrimaryMappedAssociation()
     {
+        // Create shelf 0
+        $shelf0 = new Shelf();
+        $shelf0->setBookcase('Basement');
+        $this->_em->persist($shelf0);
+        $this->_em->flush();
+        $id0 = $shelf0->getId();
+
         // Create shelf 1
         $shelf1 = new Shelf();
         $shelf1->setBookcase('Bedroom');
@@ -232,6 +239,10 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $repository = $this->_em->getRepository($this::SHELF);
         $query = $repository->createNativeNamedQuery('get-class-by-id');
 
+        $query = $query->setParameter(1, $id0);
+        $results = $query->getResult();
+        $this->assertEquals($results[0]['objectClass'], null);
+
         $query = $query->setParameter(1, $id1);
         $results = $query->getResult();
         $this->assertEquals($results[0]['objectClass'], get_class($object1));
@@ -239,6 +250,9 @@ class MappedAssociationTest extends \Doctrine\Tests\OrmFunctionalTestCase
         $results = $query->setParameter(1, $id2)
             ->getResult();
         $this->assertEquals($results[0]['objectClass'], get_class($object2));
+
+        $queryShelf0 = $repository->find($id0);
+        $this->assertEquals($shelf0, $queryShelf0);
 
         $queryShelf1 = $repository->find($id1);
         $this->assertEquals($shelf1, $queryShelf1);
